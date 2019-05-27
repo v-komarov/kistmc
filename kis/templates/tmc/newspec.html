@@ -1,0 +1,69 @@
+{% include "header.html" %}
+
+<div class="g">
+<div class="g-row">
+
+{% include "menu.html" %}
+
+
+<h3>Заявка ТМЦ номер {{ d.0 }} от {{ d.2 }}</h3>
+
+<b>Текстовое описание:</b> {{ d.4 }}<br>
+<b>Тема:</b> {{ d.3 }}<br>
+<b>Статус:</b> {{ d.6 }}<br>
+<b>Исполнитель (телефон):</b> {{ d.10 }} {{ d.9 }} ({{ d.12 }})<br>
+<b>Руководитель:</b> {{ d.17 }} {{ d.16 }}<br>
+<br>
+
+
+
+
+<ul class="f-nav f-nav-tabs">
+	<li class="active"><a href="/tmcdata">Состав заявки</a></li>
+	<li><a href="/tmcdata2">Документы</a></li>
+	<li><a href="/tmcdata3">Статусы</a></li>
+	<li><a href="/tmcdata4">История Email уведомлений</a></li>
+	<li><a href="/tmcdata4">Email руководителю</a></li>
+	<li><a href="/tmcdata5">История изменения группы</a></li>
+</ul><!-- f-nav f-nav-tabs -->
+
+
+<h3>Добавить состав заявки</h3>
+
+
+
+<center>
+    <form action="" method="post" class="forms">{% csrf_token %}
+	<fieldset>
+	    <legend>
+	    </legend>
+	    <div class="f-row">
+		<label>{{ form.name.label }}</label>
+		<div class="f-input">{{ form.name }}</div>
+	    </div><!-- f-row -->
+	    <div class="f-row">
+		<label>{{ form.okei.label }}</label>
+		<div class="f-input">{{ form.okei }}</div>
+	    </div><!-- f-row -->
+	    <div class="f-row">
+		<label>{{ form.q.label }}</label>
+		<div class="f-input">{{ form.q }}</div>
+	    </div><!-- f-row -->
+	    <div class="f-row">
+		<label>{{ form.cost.label }}</label>
+		<div class="f-input">{{ form.cost }}</div>
+	    </div><!-- f-row -->
+	    <div class="f-row">
+		<label>{{ form.analog.label }}</label>
+		<div class="f-input">{{ form.analog }}</div>
+	    </div><!-- f-row -->
+	</fieldset>
+	<div class="f-actions"><button type="submit" class="f-bu">Добавить</button></div>
+    </form>
+
+</center>
+
+
+
+</div><!-- g-row -->
+</div><!-- g -->

@@ -1,0 +1,121 @@
+{% include "header.html" %}
+
+<div class="g">
+<div class="g-row">
+
+{% include "menu.html" %}
+
+
+<h3>Список заявок</h3>
+
+
+<p>
+<a href="/tmcnew"><mark>Создать<mark></a>
+</p>
+
+<center>
+    <form action="" method="post" class="forms">{% csrf_token %}
+	<fieldset>
+	    <div class="f-row">
+		<label>{{ form.group.label }}</label>
+		<div class="f-input">{{ form.group }}</div>
+	    </div><!-- f-row -->
+	    <div class="f-row">
+		<label>{{ form.status.label }}</label>
+		<div class="f-input">{{ form.status }}</div>
+	    </div><!-- f-row -->
+	    <div class="f-row">
+		<label>{{ form.search.label }}</label>
+		<div class="f-input">{{ form.search }}</div>
+	    </div><!-- f-row -->
+	</fieldset>
+	<div class="f-actions"><button type="submit" class="f-bu">Искать</button></div>
+    </form>
+
+</center>
+
+
+{% comment %}
+<center>
+    <form action="" method="post" class="f-horizontal">{% csrf_token %}
+    <div class="f-row">
+	    {{ form.search.label }}
+	    {{ form.search }}
+	<button type="submit" class="f-bu">Искать</button>
+    </div><!-- f-row -->
+    </form>
+
+</center>
+{% endcomment %}
+
+
+{# Вывод страниц #}
+<div class="paginator">
+    <span class="step-links">
+	{% if data.has_previous %}
+	    <a href="?page={{ data.previous_page_number }}">Предыдущая</a>
+	{% endif %}
+
+    <span class="current">
+	Стр. {{ data.number }} из {{ data.paginator.num_pages }}
+    </span>
+
+	{% if data.has_next %}
+	    <a href="?page={{ data.next_page_number }}">Следующая</a>
+	{% endif %}
+    </span>
+</div><!-- paginator -->
+
+
+
+<table>
+    <caption></caption>
+    <thead>
+	<tr>
+	    <th>Номер</th>
+	    <th>Дней в<br>работе</th>
+	    <th>Дата создания</th>
+	    <th>Проект</th>
+	    <th>Тема</th>
+	    <th>Статус</th>
+	    <th>Исполнитель<br>(телефон)</th>
+	    <th>Подписал</th>
+	</tr>
+    </thead>
+    <tbody>
+	{% for row in data %}
+	<tr>
+	    <td><a href="/tmcdata/?tmc_id={{ row.0 }}" style="color: {{ row.22 }};">{{ row.0 }}</a></td>
+	    <td><a href="/tmcdata/?tmc_id={{ row.0 }}" style="color: {{ row.22 }};">{{ row.21 }}</a></td>
+	    <td><a href="/tmcdata/?tmc_id={{ row.0 }}" style="color: {{ row.22 }};">{{ row.2 }}</a></td>
+	    <td><a href="/tmcdata/?tmc_id={{ row.0 }}" style="color: {{ row.22 }};">{{ row.24 }}<br>{{ row.25 }}</a></td>
+	    <td><a href="/tmcdata/?tmc_id={{ row.0 }}" style="color: {{ row.22 }};">{{ row.3 }}</a></td>
+	    <td><a href="/tmcdata/?tmc_id={{ row.0 }}" style="color: {{ row.22 }};">{{ row.6 }}</a></td>
+	    <td><a href="/tmcdata/?tmc_id={{ row.0 }}" style="color: {{ row.22 }};">{{ row.10 }} {{ row.9 }}<br>({{ row.12 }})</a></td>
+	    <td><a href="/tmcdata/?tmc_id={{ row.0 }}" style="color: {{ row.22 }};">{{ row.17 }}<br>{{ row.16 }}</a></td>
+	</tr>
+	{% endfor%}
+    </tbody>
+</table>
+
+{# Вывод страниц #}
+<div class="paginator">
+    <span class="step-links">
+	{% if data.has_previous %}
+	    <a href="?page={{ data.previous_page_number }}">Предыдущая</a>
+	{% endif %}
+
+    <span class="current">
+	Стр. {{ data.number }} из {{ data.paginator.num_pages }}
+    </span>
+
+	{% if data.has_next %}
+	    <a href="?page={{ data.next_page_number }}">Следующая</a>
+	{% endif %}
+    </span>
+</div><!-- paginator -->
+
+
+
+</div><!-- g-row -->
+</div><!-- g -->

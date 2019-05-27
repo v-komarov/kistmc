@@ -1,0 +1,54 @@
+{% include "header.html" %}
+
+<div class="g">
+<div class="g-row">
+
+{% include "menu.html" %}
+
+
+<h3>Заявки ТМЦ</h3>
+
+
+<ul class="f-nav f-nav-tabs">
+	<li><a href="/tmc?mark=common">Сибтранстелеком</a></li>
+	<li><a href="/tmc?mark=auto">Автотранспорт(Сиб)</a></li>
+	<li><a href="/tmc?mark=it">IT(Сиб)</a></li>
+	<li><a href="/tmc?mark=tron">МР Сибирь</a></li>
+	<li><a href="/tmc?mark=baykal">МР Байкал</a></li>	
+	<li class="active"><a href="/tmcorderlist">Внутренний заказ</a></li>
+	<li><a href="/tmcopt">Настройки</a></li>
+</ul><!-- f-nav f-nav-tabs -->
+
+
+<h3>Новый внутренний заказ</h3>
+
+
+<center>
+    <form action="" method="post" class="forms">{% csrf_token %}
+	<fieldset>
+	    <legend>
+	    </legend>
+	    <div class="f-row">
+		<label>{{ form.tmc.label }}</label>
+		<div class="f-input">{{ form.tmc }}</div>
+	    </div><!-- f-row -->
+	    <div class="f-row">
+		<label>{{ form.project.label }}</label>
+		<div class="f-input">{{ form.project }}</div>
+	    </div><!-- f-row -->
+	    <div class="f-row">
+		<label>{{ form.executor.label }}</label>
+		<div class="f-input">{{ form.executor }}</div>
+	    </div><!-- f-row -->
+	</fieldset>
+	<div class="f-actions"><button type="submit" class="f-bu">Создать</button></div>
+    </form>
+
+</center>
+
+
+
+
+
+</div><!-- g-row -->
+</div><!-- g -->

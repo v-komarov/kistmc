@@ -1,0 +1,68 @@
+{% include "header.html" %}
+
+<div class="g">
+<div class="g-row">
+
+{% include "menu.html" %}
+
+
+<h3>Заявки ТМЦ</h3>
+
+
+
+<ul class="f-nav f-nav-tabs">
+	<li><a href="/tmc?mark=common">Сибтранстелеком</a></li>
+	<li><a href="/tmc?mark=auto">Автотранспорт(Сиб)</a></li>
+	<li><a href="/tmc?mark=it">IT(Сиб)</a></li>
+	<li><a href="/tmc?mark=tron">МР Сибирь</a></li>
+	<li><a href="/tmc?mark=baykal">МР Байкал</a></li>	
+	<li class="active"><a href="/tmcorderlist">Внутренний заказ</a></li>
+	<li><a href="/tmcopt">Настройки</a></li>
+</ul><!-- f-nav f-nav-tabs -->
+
+
+<h3>Состав внутреннего заказа</h3>
+
+<p>
+<b>Номер и дата: </b>{{ order.0 }} от {{ order.1 }}<br>
+<b>ТМЦ: </b>{{ order.2 }} от {{ order.3 }}<br>
+<b>Тема: </b>{{ order.4 }}<br>
+<b>Проект: </b>{{ order.6 }}<br>
+<b>Исполнитель: </b>{{ order.11 }} {{ order.10 }}<br>
+<b>Получатель: </b>{{ order.15 }} {{ order.14 }}
+</p>
+
+
+<form method="POST">{% csrf_token %}
+
+<table>
+    <caption></caption>
+    <thead>
+	<tr>
+	    <th>Наименование</th>
+	    <th>Ед.изм.</th>
+	    <th>Количество</th>
+	    <th>Примечание</th>
+	</tr>
+    </thead>
+    <tbody>
+	    {% for row in data %}
+	    <tr>
+		<td>{{ row.2 }}</td>
+		<td>{{ row.3 }}</td>
+		<td><div class="f-input"><input class="g-1" name="spec{{ row.0 }}" value="{{ row.4 }}" type="text" /></div></td>
+		<td>{{ row.5 }}</td>
+	    </tr>
+	    {% endfor%}
+    </tbody>
+</table>
+
+
+    <div class="f-actions"><button type="submit" class="f-bu">Сохранить</button></div>
+</form>
+
+
+
+
+</div><!-- g-row -->
+</div><!-- g -->

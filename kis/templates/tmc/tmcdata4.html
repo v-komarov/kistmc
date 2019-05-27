@@ -1,0 +1,63 @@
+{% include "header.html" %}
+
+<div class="g">
+<div class="g-row">
+
+{% include "menu.html" %}
+
+
+<h3>Заявка ТМЦ номер {{ d.0 }} от {{ d.2 }}</h3>
+
+<b>Текстовое описание:</b> {{ d.4 }}<br>
+<b>Тема:</b> {{ d.3 }}<br>
+<b>Статус:</b> {{ d.6 }}<br>
+<b>Исполнитель (телефон):</b> {{ d.10 }} {{ d.9 }} ({{ d.12 }})<br>
+<b>Руководитель:</b> {{ d.17 }} {{ d.16 }}<br>
+<b>Шифр затрат:</b> {{ d.23 }}<br>
+<br>
+
+{% include "tmc/last_status.html" %}
+
+
+<ul class="f-nav f-nav-tabs">
+	<li><a href="/tmcdata">Состав заявки</a></li>
+	<li><a href="/tmcdata2">Документы</a></li>
+	<li><a href="/tmcdata3">Статусы</a></li>
+	<li class="active"><a href="/tmcdata4">История Email уведомлений</a></li>
+	<li><a href="/tmcdata5">Email руководителю</a></li>
+	<li><a href="/tmcdata6">История изменения группы</a></li>
+	<li><a href="/tmcdata7">Шифр затрат</a></li>
+</ul><!-- f-nav f-nav-tabs -->
+
+
+<h3>История Email уведомлений</h3>
+
+
+
+<table>
+    <caption></caption>
+    <thead>
+	<tr>
+	    <th>Дата</th>
+	    <th>Время</th>
+	    <th>Email адрес</th>
+	    <th>Содержание сообщения</th>
+	</tr>
+    </thead>
+    <tbody>
+	{% for row in data %}
+	<tr>
+	    <td>{{ row.2 }}</td>
+	    <td>{{ row.3 }}</td>
+	    <td>{{ row.4 }}</td>
+	    <td>{{ row.1 }}</td>
+	    <td></td>
+	</tr>
+	{% endfor%}
+    </tbody>
+</table>
+
+
+
+</div><!-- g-row -->
+</div><!-- g -->

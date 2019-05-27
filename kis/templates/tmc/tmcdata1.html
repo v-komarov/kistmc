@@ -1,0 +1,123 @@
+{% include "header.html" %}
+
+<div class="g">
+<div class="g-row">
+
+{% include "menu.html" %}
+
+
+<h3>{% if d.5 == '0' %}<td><a href="/tmcedit"><i class="fa fa-edit">&nbsp;&#9997;</i></a></td>{% endif %} Заявка ТМЦ номер {{ d.0 }} от {{ d.2 }}&nbsp;<a href="/tmctocsv" style="cursor:pointer;text-decoration:none;">csv</a></h3>
+
+
+<b>Текстовое описание:</b> {{ d.4 }}<br>
+<b>Тема:</b> {{ d.3 }}<br>
+<b>Статус:</b> {{ d.6 }}<br>
+<b>Исполнитель (телефон):</b> {{ d.10 }} {{ d.9 }} ({{ d.12 }})<br>
+<b>Руководитель:</b> {{ d.17 }} {{ d.16 }}<br>
+<b>Шифр затрат:</b> {{ d.23 }}<br>
+<br>
+
+{% include "tmc/last_status.html" %}
+
+{{ last_status }}
+
+<ul class="f-nav f-nav-tabs">
+	<li class="active"><a href="/tmcdata">Состав заявки</a></li>
+	<li><a href="/tmcdata2">Документы</a></li>
+	<li><a href="/tmcdata3">Статусы</a></li>
+	<li><a href="/tmcdata4">История Email уведомлений</a></li>
+	<li><a href="/tmcdata5">Email руководителю</a></li>
+	<li><a href="/tmcdata6">История изменения группы</a></li>
+	<li><a href="/tmcdata7">Шифр затрат</a></li>
+</ul><!-- f-nav f-nav-tabs -->
+
+
+<h3>Состав заявки</h3>
+
+
+
+{% if d.5 == '0' %}
+<p>
+<a href="/tmcnewspec"><mark>Добавить<mark></a>
+</p>
+{% endif %}
+
+
+<table>
+    <caption></caption>
+    <thead>
+	<tr>
+	    {% if d.5 == '0' %}<th></th>{% endif %}
+	    <th>№ п/п</th>
+	    <th>Наименование, марка, технические характеристики</th>
+	    <th>Ед.изм.</th>
+	    <th>Кол-во</th>
+	    <th>Ориентировочная цена (руб.)</th>
+	    <th>Существующий аналог для замены<br>Примечание</th>
+	    {% if d.5 == '0' %}<th>Удалить</th>{% endif %}
+	</tr>
+    </thead>
+    <tbody>
+	{% for row in data %}
+	<tr>
+	    {% if d.5 == '0' %}<td><a href="/tmcspecedit/?spec_id={{ row.0 }}"><i class="fa fa-edit">&nbsp;&#9997;</i></a></td>{% endif %}
+	    <td>{{ row.2 }}</td>
+	    <td>{{ row.3 }}</td>
+	    <td>{{ row.4 }}</td>
+	    <td>{{ row.5 }}</td>
+	    <td>{{ row.6 }}</td>
+	    <td>{{ row.7 }}<br>{{ row.8 }}</td>
+	    {% if d.5 == '0' %}<td><a href="/tmcdata/?delete_id={{ row.0 }}"><mark>X</mark></a></td>{% endif %}
+	</tr>
+	{% endfor%}
+    </tbody>
+</table>
+
+
+
+
+
+
+{% if d.5 == '0' %}
+<center>
+    <form action="" method="post" class="forms">{% csrf_token %}
+	<fieldset>
+	    <legend>
+		Загрузка состава из другой заявки 
+	    </legend>
+	    <div class="f-row">
+		<label>{{ nform.n.label }}</label>
+		<div class="f-input">{{ nform.n }}</div>
+	    </div><!-- f-row -->
+	</fieldset>
+	<div class="f-actions"><button type="submit" class="f-bu">Загрузить</button></div>
+    </form>
+
+</center>
+{% endif %}
+
+
+{% comment %}
+{% if d.5 == '0' %}
+<center>
+    <form action="" enctype="multipart/form-data" method="post" class="forms">{% csrf_token %}
+	<fieldset>
+	    <legend>
+		Загрузка из файла
+	    </legend>
+	    <div class="f-row">
+		<label>{{ form.file_load.label }}</label>
+		<div class="f-input">{{ form.file_load }}</div>
+	    </div><!-- f-row -->
+	</fieldset>
+	<div class="f-actions"><button type="submit" class="f-bu">Загрузить</button></div>
+    </form>
+
+</center>
+{% endif %}
+{% endcomment %}
+
+
+
+</div><!-- g-row -->
+</div><!-- g -->

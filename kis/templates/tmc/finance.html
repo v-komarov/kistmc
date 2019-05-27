@@ -1,0 +1,96 @@
+{% include "header.html" %}
+
+<div class="g">
+<div class="g-row">
+
+{% include "menu.html" %}
+
+
+<h3>Заявки ТМЦ</h3>
+
+<ul class="f-nav f-nav-tabs">
+	<li><a href="/tmc?mark=common">Общие</a></li>
+	<li><a href="/tmc?mark=auto">Автотранспорт</a></li>
+	<li><a href="/tmc?mark=it">IT</a></li>
+	<li><a href="/tmc?mark=tron">МР Сибирь</a></li>
+	<li><a href="/tmcorderlist">Внутренний заказ</a></li>
+	<li><a href="/tmcreports">Отчеты</a></li>
+	
+	<li class="active"><a href="/tmcopt">Настройки</a></li>
+</ul><!-- f-nav f-nav-tabs -->
+
+
+<h3>Настройки</h3>
+
+
+<ul class="f-nav f-nav-tabs">
+	<li class="active"><a href="/tmcopt">Группа финансов</a></li>
+	<li><a href="/tmcopt2">Группа логистики</a></li>
+</ul><!-- f-nav f-nav-tabs -->
+
+<h3>Финансовая группа</h3>
+
+
+<ul>
+
+    {% for item in data %}
+	<li>{{ item.4 }} {{ item.3 }}&nbsp;&nbsp;&nbsp;&nbsp;<a href="/tmcopt/?delete_id={{ item.0 }}"><i class="fa fa-trash-o"></i></a></li>
+    {% endfor %}
+
+</ul>
+
+
+
+<center>
+    <form action="" method="post" class="forms">{% csrf_token %}
+	<fieldset>
+	    <legend>
+	    </legend>
+	    <div class="f-row">
+		<label>{{ form.user.label }}</label>
+		<div class="f-input">{{ form.user }}</div>
+	    </div><!-- f-row -->
+	</fieldset>
+	<div class="f-actions"><button type="submit" class="f-bu">Добавить</button></div>
+    </form>
+
+</center>
+
+
+
+<h3>Уведомления по группам ТМЦ</h3>
+
+
+<ul>
+
+    {% for item in data2 %}
+	<li>{{ item.2 }} {{ item.1 }} <b>Группа ТМЦ : </b> {{ item.6 }} &nbsp;&nbsp;&nbsp;&nbsp;<a href="/tmcopt2/?email_group={{ item.0 }}"><i class="fa fa-trash-o"></i></a></li>
+    {% endfor %}
+
+</ul>
+
+
+
+<center>
+    <form action="" method="post" class="forms">{% csrf_token %}
+	<fieldset>
+	    <legend>
+	    </legend>
+	    <div class="f-row">
+		<label>{{ form2.user_kod.label }}</label>
+		<div class="f-input">{{ form2.user_kod }}</div>
+	    </div><!-- f-row -->
+	    <div class="f-row">
+		<label>{{ form2.group.label }}</label>
+		<div class="f-input">{{ form2.group }}</div>
+	    </div><!-- f-row -->
+	</fieldset>
+	<div class="f-actions"><button type="submit" class="f-bu">Добавить</button></div>
+    </form>
+
+</center>
+
+
+
+</div><!-- g-row -->
+</div><!-- g -->
