@@ -5,7 +5,7 @@ from	django.forms.extras.widgets	import	SelectDateWidget
 
 from	kis.lib.tmc	import	GetOkei
 from	kis.lib.tmc	import	GetUserList,GetStatusListAll,GetEmailRukList,GetStatusListFilter,GetTmcOrder,GetTmcGroupList, GetProjectsType
-
+from kis.lib.tmc import GetSpecStatusList
 
 
 tmcgroup = GetTmcGroupList()
@@ -24,6 +24,18 @@ class	SearchForm(forms.Form):
         super(SearchForm,self).__init__(*args,**kwargs)
         self.fields['group'].choices = GetTmcGroupList()
         self.fields['status'].choices = GetStatusListFilter()
+
+
+
+### --- Поиск по материалам проектов---
+class	SearchSpecForm(forms.Form):
+    project = forms.ChoiceField(label='Проект',choices=GetStatusListFilter(),required=False)
+    status = forms.ChoiceField(label='Статус',choices=GetStatusListFilter(),required=False)
+    search = forms.CharField(label='Строка поиска',required=False)
+    def	__init__(self,*args,**kwargs):
+        super(SearchSpecForm,self).__init__(*args,**kwargs)
+        self.fields['project'].choices = GetProjectsType()
+        self.fields['status'].choices = GetSpecStatusList()
 
 
 

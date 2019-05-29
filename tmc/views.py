@@ -9,8 +9,8 @@ from	django.shortcuts	import	render_to_response
 from	django.core.paginator	import	Paginator, InvalidPage, EmptyPage
 
 from	kis.lib.userdata	import	CheckAccess,GetUserKod
-from	forms			import	SearchForm,NewTmcForm,EditTmcForm
-from	kis.lib.tmc		import	GetTmcList,NewTmc,GetTmcData,GetTmcSpec,EditTmc
+from	forms			import	SearchForm,NewTmcForm,EditTmcForm, SearchSpecForm
+from	kis.lib.tmc		import	GetTmcList,NewTmc,GetTmcData,GetTmcSpec,EditTmc, GetSpectProj
 
 
 
@@ -153,4 +153,57 @@ def	TmcEdit(request):
     c = RequestContext(request,{'d':d,'form':form,'data':data})
     c.update(csrf(request))
     return render_to_response("tmc/tmcedit.html",c)
+
+
+### --- Материалы проектов ---
+def ProjSpec(request):
+    ### --- Получение номера страницы ---
+    try:
+        page = int(request.GET.get('page', 1))
+        request.session['page'] = page
+    except:
+        pass
+
+    try:
+        page = int(request.session['page'])
+    except:
+        page = 1
+
+    try:
+        search = request.session['search']
+        status = request.session['status']
+        project = request.session['project']
+    except:
+        search = ''
+        status = ''
+        project = ''
+
+    if request.method == 'POST':
+
+        form = SearchSpecForm(request.POST)
+        if form.is_valid():
+            search = form.cleaned_data['search']
+            status = form.cleaned_data['status']
+            project = form.cleaned_data['project']
+            request.session['search'] = search
+            request.session['status'] = status
+            request.session['project'] = project
+
+    data = GetSpectProj(search, project, status)
+
+    form = SearchSpecForm(None)
+    form.fields['search'].initial = search
+    form.fields['status'].initial = status
+    form.fields['project'].initial = project
+
+    paginator = Paginator(data, 50)
+    try:
+        data_page = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        data_page = paginator.page(paginator.num_pages)
+
+
+    c = RequestContext(request, {'form': form, 'data': data_page})
+    c.update(csrf(request))
+    return render_to_response("tmc/proj.html", c)
 

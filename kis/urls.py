@@ -43,6 +43,8 @@ urlpatterns = patterns('',
 
     url(r'^admina/', include('admina.urls')),
 
+    url(r'^jsondata/', 'tmc.jsondata.get_json'),
+    url(r'^proj/', 'tmc.views.ProjSpec'),
 
     url(r'css/(?P<path>.*)$','django.views.static.serve',{'document_root':'/home/task/kis/kis/static/css/',}),
     url(r'js/(?P<path>.*)$','django.views.static.serve',{'document_root':'/home/task/kis/kis/static/js/',}),

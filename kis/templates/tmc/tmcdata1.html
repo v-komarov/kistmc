@@ -1,5 +1,73 @@
 {% include "header.html" %}
 
+
+
+
+<script>
+
+
+
+$(document).ready(function() {
+
+	$("select[spec_id]").change(function() {
+		//console.log($(this).val(),$(this).attr("spec_id"));
+
+
+		var jqxhr = $.getJSON("/jsondata/?action=spec_status&spec_id="+$(this).attr("spec_id")+"&status_id="+$(this).val(),
+        function(data) {
+
+            if (data["result"] == "ok") {
+
+
+            }
+
+        })
+
+
+
+	});
+
+
+	// Удаление номенклатуры из даявки
+	$("a[spec_id]").bind("click",DeleteSpec);
+
+
+
+});
+
+
+
+
+function DeleteSpec(e) {
+
+	var spec_id = $(this).attr("spec_id");
+	var row = $(this).parents("tr").eq(0);
+	//console.log($(this).attr("spec_id"),$(this).parents("tr").eq(0));
+
+
+		var jqxhr = $.getJSON("/jsondata/?action=spec_delete&spec_id="+spec_id,
+        function(data) {
+
+            if (data["result"] == "OK") {
+
+				row.empty();
+
+            }
+
+        })
+
+
+}
+
+
+
+</script>
+
+
+
+
+
+
 <div class="g">
 <div class="g-row">
 
@@ -49,11 +117,12 @@
 	<tr>
 	    {% if d.5 == '0' %}<th></th>{% endif %}
 	    <th>№ п/п</th>
-	    <th>Наименование, марка, технические характеристики</th>
+	    <th>Наименование, марка,<br>Технические характеристики</th>
 	    <th>Ед.изм.</th>
 	    <th>Кол-во</th>
-	    <th>Ориентировочная цена (руб.)</th>
-	    <th>Существующий аналог для замены<br>Примечание</th>
+	    <th>Ориентировочная<br>цена (руб.)</th>
+	    <th>Существующий<br>аналог для замены<br>Примечание</th>
+		<th>Статус</th>
 	    {% if d.5 == '0' %}<th>Удалить</th>{% endif %}
 	</tr>
     </thead>
@@ -67,7 +136,20 @@
 	    <td>{{ row.5 }}</td>
 	    <td>{{ row.6 }}</td>
 	    <td>{{ row.7 }}<br>{{ row.8 }}</td>
-	    {% if d.5 == '0' %}<td><a href="/tmcdata/?delete_id={{ row.0 }}"><mark>X</mark></a></td>{% endif %}
+		<td>
+			<div class="f-input"  style="margin-left:1px;">
+				<select spec_id="{{ row.0 }}">
+					{% for s in stspec %}
+						{% if s.0|slugify == row.21|slugify %}
+							<option value="{{ s.0 }}" selected>{{ s.1 }}</option>
+						{% else %}
+							<option value="{{ s.0 }}">{{ s.1 }}</option>
+						{% endif %}
+					{% endfor %}
+				</select>
+			</div>
+		</td>
+	    {% if d.5 == '0' %}<td><a spec_id="{{ row.0 }}" href="#"><mark>X</mark></a></td>{% endif %}
 	</tr>
 	{% endfor%}
     </tbody>

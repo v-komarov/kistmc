@@ -9,23 +9,20 @@
 
 
 <ul class="f-nav f-nav-tabs">
-	<li class="active"><a href="/tmc">Список заявок</a></li>
-	<li><a href="/proj">Материалы проектов</a></li>
+	<li><a href="/tmc">Список заявок</a></li>
+	<li class="active"><a href="/proj">Материалы проектов</a></li>
 </ul><!-- f-nav f-nav-tabs -->
 
 
 
 
-<p>
-<a href="/tmcnew"><mark>Создать<mark></a>
-</p>
 
 <center>
     <form action="" method="post" class="forms">{% csrf_token %}
 	<fieldset>
 	    <div class="f-row">
-		<label>{{ form.group.label }}</label>
-		<div class="f-input">{{ form.group }}</div>
+		<label>{{ form.project.label }}</label>
+		<div class="f-input">{{ form.project }}</div>
 	    </div><!-- f-row -->
 	    <div class="f-row">
 		<label>{{ form.status.label }}</label>
@@ -79,27 +76,29 @@
     <caption></caption>
     <thead>
 	<tr>
-	    <th>Номер</th>
-	    <th>Дней в<br>работе</th>
-	    <th>Дата создания</th>
+	    <th>Номер<br>заявки</th>
+	    <th>Статус<br>заявки</th>
+	    <th>Тема<br>заявки</th>
 	    <th>Проект</th>
-	    <th>Тема</th>
-	    <th>Статус</th>
-	    <th>Исполнитель<br>(телефон)</th>
-	    <th>Подписал</th>
+	    <th>Наименование, марка,<br>Технические характеристики</th>
+	    <th>Ед.изм.</th>
+	    <th>Кол-во</th>
+	    <th>Ориентировочная<br>цена (руб.)</th>
+		<th>Статус</th>
 	</tr>
     </thead>
     <tbody>
 	{% for row in data %}
 	<tr>
-	    <td><a href="/tmcdata/?tmc_id={{ row.0 }}" style="color: {{ row.22 }};">{{ row.0 }}</a></td>
-	    <td><a href="/tmcdata/?tmc_id={{ row.0 }}" style="color: {{ row.22 }};">{{ row.21 }}</a></td>
-	    <td><a href="/tmcdata/?tmc_id={{ row.0 }}" style="color: {{ row.22 }};">{{ row.2 }}</a></td>
-	    <td><a href="/tmcdata/?tmc_id={{ row.0 }}" style="color: {{ row.22 }};">{{ row.24 }}<br>{{ row.25 }}</a></td>
-	    <td><a href="/tmcdata/?tmc_id={{ row.0 }}" style="color: {{ row.22 }};">{{ row.3 }}</a></td>
-	    <td><a href="/tmcdata/?tmc_id={{ row.0 }}" style="color: {{ row.22 }};">{{ row.6 }}</a></td>
-	    <td><a href="/tmcdata/?tmc_id={{ row.0 }}" style="color: {{ row.22 }};">{{ row.10 }} {{ row.9 }}<br>({{ row.12 }})</a></td>
-	    <td><a href="/tmcdata/?tmc_id={{ row.0 }}" style="color: {{ row.22 }};">{{ row.17 }}<br>{{ row.16 }}</a></td>
+	    <td><a href="/tmcdata/?tmc_id={{ row.1 }}" style="color: {{ row.22 }};">{{ row.1 }}</a></td>
+	    <td><a href="/tmcdata/?tmc_id={{ row.1 }}" style="color: {{ row.22 }};">{{ row.3 }}</a></td>
+	    <td><a href="/tmcdata/?tmc_id={{ row.1 }}" style="color: {{ row.22 }};">{{ row.2 }}</a></td>
+	    <td><a href="/tmcdata/?tmc_id={{ row.1 }}" style="color: {{ row.22 }};">{{ row.11 }}<br>{{ row.12 }}</a></td>
+	    <td><a href="/tmcdata/?tmc_id={{ row.1 }}" style="color: {{ row.22 }};">{{ row.4 }}</a></td>
+	    <td><a href="/tmcdata/?tmc_id={{ row.1 }}" style="color: {{ row.22 }};">{{ row.5 }}<br>{{ row.25 }}</a></td>
+	    <td><a href="/tmcdata/?tmc_id={{ row.1 }}" style="color: {{ row.22 }};">{{ row.6 }}</a></td>
+	    <td><a href="/tmcdata/?tmc_id={{ row.1 }}" style="color: {{ row.22 }};">{{ row.7 }}</a></td>
+	    <td><a href="/tmcdata/?tmc_id={{ row.1 }}" style="color: {{ row.22 }};">{{ row.8 }}</a></td>
 	</tr>
 	{% endfor%}
     </tbody>

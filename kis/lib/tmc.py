@@ -643,3 +643,55 @@ def	GetReportSpecData(chief,start_date,end_date):
     return data
 
 
+
+### --- Справочник статусов для элементов номенклатуры ---
+def GetSpecStatusList():
+
+    cursor = connections['main'].cursor()
+    cursor.execute("SELECT t_rec_id,t_name FROM t_tmc_spec_status_list ORDER BY t_name;")
+    data = cursor.fetchall()
+
+    return data
+
+
+### --- Установка статуса номенклатуры ---
+def NewSpecStatus(user_id,spec_id,status_id):
+    user_id = user_id.encode("utf-8")
+    spec_id = spec_id.encode("utf-8")
+    cursor = connections['main'].cursor()
+    cursor.execute("SELECT t_newspecstatus(%s,%s,%s);", [user_id,spec_id,status_id])
+    return 'OK'
+
+
+
+### --- Удаление номенклатуры из заявки ---
+def DeleteSpec(spec_id):
+    spec_id = spec_id.encode("utf-8")
+    cursor = connections['main'].cursor()
+    cursor.execute("UPDATE t_tmc_spec SET t_rec_delete=1 WHERE t_rec_id=%s;", [spec_id,])
+    return 'OK'
+
+
+
+
+
+### --- Получение номенклатуры по проектам ---
+def	GetSpectProj(search,project,status):
+    search = search.encode("utf-8").replace(' ','')
+    project = 0 if project == '' else int(project,10)
+    status = 0 if status == '' else int(status,10)
+
+    cursor = connections['main'].cursor()
+    if search == '':
+        cursor.execute("SELECT * FROM t_show_tmc_spec_project WHERE project_id=%s AND status_id=%s;", (project,status))
+    else:
+        cursor.execute("""SELECT * FROM t_show_tmc_spec_project WHERE project_id=%s AND status_id=%s AND (\
+        \
+        to_tsvector('russian',project_num) @@ to_tsquery('russian','%s:*') OR \
+        to_tsvector('russian',tema) @@ to_tsquery('russian','%s:*') OR \
+        to_tsvector('russian',row_name) @@ to_tsquery('russian','%s:*')) \
+        ;""" % (project,status,search,search,search))
+
+    data = cursor.fetchall()
+
+    return data
