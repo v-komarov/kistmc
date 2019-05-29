@@ -682,8 +682,17 @@ def	GetSpectProj(search,project,status):
     status = 0 if status == '' else int(status,10)
 
     cursor = connections['main'].cursor()
-    if search == '':
+    if search == '' and status != 1:
         cursor.execute("SELECT * FROM t_show_tmc_spec_project WHERE project_id=%s AND status_id=%s;", (project,status))
+    elif search == '' and status == 1:
+        cursor.execute("SELECT * FROM t_show_tmc_spec_project WHERE project_id=%s;", (project,))
+    elif search != '' and status == 1:
+        cursor.execute("""SELECT * FROM t_show_tmc_spec_project WHERE project_id=%s AND (\
+        \
+        to_tsvector('russian',project_num) @@ to_tsquery('russian','%s:*') OR \
+        to_tsvector('russian',tema) @@ to_tsquery('russian','%s:*') OR \
+        to_tsvector('russian',row_name) @@ to_tsquery('russian','%s:*')) \
+        ;""" % (project, search, search, search))
     else:
         cursor.execute("""SELECT * FROM t_show_tmc_spec_project WHERE project_id=%s AND status_id=%s AND (\
         \
