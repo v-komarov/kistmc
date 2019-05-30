@@ -704,3 +704,21 @@ def	GetSpectProj(search,project,status):
     data = cursor.fetchall()
 
     return data
+
+
+
+
+### --- Поиск номенклатуры ---
+def SearchRange(term):
+    term = term.encode("utf-8")
+    cursor = connections['main'].cursor()
+
+
+    cursor.execute("""SELECT * FROM t_tmc_range WHERE (\
+    \
+    to_tsvector('russian',t_name) @@ to_tsquery('russian','%s:*')) \
+    ;""" % (term))
+
+    data = cursor.fetchall()
+
+    return data

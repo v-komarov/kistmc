@@ -5,7 +5,7 @@ import json
 
 from django.http import HttpResponse
 from kis.lib.userdata import GetUserKod
-from kis.lib.tmc import NewSpecStatus, DeleteSpec
+from kis.lib.tmc import NewSpecStatus, DeleteSpec, SearchRange
 
 
 
@@ -37,6 +37,29 @@ def get_json(request):
             spec_id = request.GET["spec_id"]
             DeleteSpec(spec_id)
             response_data = {'result':'OK'}
+
+
+
+
+        #### Поиск номенклатуры
+        if r.has_key("term") and rg("term") != "":
+            term = request.GET["term"]
+            obj = []
+
+            data = SearchRange(term)
+            for item in data:
+
+                label =  u"{name}".format(name=item[1])
+                obj.append(
+                    {
+                        "label": label,
+                        "value": label
+                    }
+                )
+
+
+            response_data = obj
+
 
 
 
