@@ -43,3 +43,34 @@ def DelUserGroup(user_id,group_id):
     cursor.execute("DELETE FROM t_tmc_user_groups WHERE user_id=%s AND group_id=%s;", (user_id,group_id))
 
     return "OK"
+
+
+
+
+### Список номенклатуры
+def	GetRangeList():
+    cursor = connections['main'].cursor()
+    cursor.execute("SELECT t_rec_id,t_name FROM t_tmc_range ORDER BY t_name;")
+    data = cursor.fetchall()
+
+    return data
+
+
+
+
+### Список номенклатуры
+def	NewRange(name):
+    name = name.encode('utf-8')
+    cursor = connections['main'].cursor()
+    cursor.execute("SELECT t_newtmcrange(%s);",(name,))
+    data = cursor.fetchone()
+
+    return data[0]
+
+
+### Удаление номенклатуры
+def DeleteRange(range_id):
+    cursor = connections['main'].cursor()
+    cursor.execute("DELETE FROM t_tmc_range WHERE t_rec_id=%s;", (range_id,))
+
+    return "OK"

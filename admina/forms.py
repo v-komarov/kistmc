@@ -14,3 +14,7 @@ class	UserForm(forms.Form):
         super(UserForm,self).__init__(*args,**kwargs)
         self.fields['user'].choices = GetUserList()
 
+
+### --- Добавление номенклатуры
+class	RangeForm(forms.Form):
+    name = forms.CharField(label='Наименование',required=False, widget=forms.TextInput(attrs={'class':'g-6',}))

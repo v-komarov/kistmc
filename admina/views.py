@@ -11,8 +11,8 @@ from django.http import HttpResponseRedirect
 
 
 from kis.lib.userdata import AccessAdmin
-from admina.forms import UserForm
-from kis.lib.admina import AddUserGroup, GetUserGroup, DelUserGroup as DelUser
+from admina.forms import UserForm, RangeForm
+from kis.lib.admina import AddUserGroup, GetUserGroup, DelUserGroup as DelUser, GetRangeList
 
 
 
@@ -91,3 +91,27 @@ def DelUserGroup(request):
         return HttpResponseRedirect('/admina/mtsgroup')
     else:
         return HttpResponseRedirect('/admina/fingroup')
+
+
+
+
+
+### Справочник номенклатуры
+def Range(request):
+
+
+
+    ### --- Проверка доступа к этой закладки ---
+    if AccessAdmin(request) != 'OK':
+        c = RequestContext(request,{})
+        return render_to_response("admina/notaccess.html",c)
+
+
+
+
+    data = GetRangeList()
+    form = RangeForm()
+    c = RequestContext(request,{'data':data, 'form': form})
+    c.update(csrf(request))
+    return render_to_response("admina/range.html",c)
+

@@ -1,0 +1,133 @@
+{% include "header.html" %}
+
+<script>
+
+
+
+$(document).ready(function() {
+
+
+    // Добавление номенклатуры
+    $("button").bind("click",NewRange);
+
+    // Удаление файла
+    $("table tbody").on("click", "a[range_id]", DeleteRange);
+
+
+});
+
+
+
+
+
+// Добавление номенклатуры
+function NewRange(e) {
+
+        var name = $("input#id_name").val();
+
+		var jqxhr = $.getJSON("/admina/jsondata/?action=new_range&name="+name,
+        function(data) {
+
+            if (data["result"] == "OK") {
+
+                $("input#id_name").val('');
+
+                var t = "<tr>"
+                +"<td>"+name+"</td>"
+                +"<td><a range_id="+data['range_id']+" href=\"#\">X</a></td>"
+                +"</tr>";
+
+                $("table tbody").append(t);
+
+            }
+
+        });
+
+}
+
+
+// Удаление строки номенклатуры
+function DeleteRange(e) {
+
+    //console.log($(this));
+
+	var range_id = $(this).attr("range_id");
+	var row = $(this).parents("tr").eq(0);
+	//console.log($(this).attr("range_id"),$(this).parents("tr").eq(0));
+
+
+		var jqxhr = $.getJSON("/admina/jsondata/?action=range_delete&range_id="+range_id,
+        function(data) {
+
+            if (data["result"] == "OK") {
+
+				row.empty();
+
+            }
+
+        })
+
+
+}
+
+
+
+</script>
+
+
+
+
+
+<div class="g">
+<div class="g-row">
+
+{% include "menu.html" %}
+
+
+
+<p></p>
+
+
+
+<ul class="f-nav f-nav-tabs">
+    <li><a href="/admina/mtsgroup/">МТС</a></li>
+    <li><a href="/admina/fingroup/">Фин.контроль</a></li>
+    <li class="active"><a href="/admina/range/">Номенклатура</a></li>
+</ul><!-- f-nav f-nav-tabs -->
+
+</div><!-- g-row -->
+
+
+
+<div class="g-row">
+<table border=0>
+    <tr>
+        <th>Наименование</th>
+        <th>Удалить</th>
+    </tr>
+
+    {% for row in data %}
+        <tr>
+            <td>{{ row.1 }}</td>
+            <td><a range_id={{ row.0 }} href="#">X</a></td>
+        </tr>
+    {% endfor %}
+
+</table>
+
+
+<center>
+	    <div class="f-row">
+		<label>{{ form.name.label }}</label>
+		<div class="f-input">{{ form.name }}</div>
+	    </div><!-- f-row -->
+	    <div class="f-actions"><button type="submit" class="f-bu">Добавить</button></div>
+</center>
+
+
+
+
+</div><!-- g-row -->
+</div><!-- g -->
+
+{% include "footer.html" %}
