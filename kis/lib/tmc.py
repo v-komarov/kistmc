@@ -35,9 +35,9 @@ def	GetTmcList(search,group,status=''):
 
     cursor = connections['main'].cursor()
     if search == '' and status == '':
-        cursor.execute("SELECT * FROM t_show_tmc WHERE grouptmc='%s';" % (group))
+        cursor.execute("SELECT * FROM t_show_tmc;")
     elif search != '' and status == '':
-        cursor.execute("""SELECT * FROM t_show_tmc WHERE grouptmc='%s' AND (\
+        cursor.execute("""SELECT * FROM t_show_tmc WHERE (\
         \
         to_tsvector('russian',rec_id) @@ to_tsquery('russian','%s:*') OR \
         to_tsvector('russian',date_create) @@ to_tsquery('russian','%s:*') OR \
@@ -48,11 +48,11 @@ def	GetTmcList(search,group,status=''):
         to_tsvector('russian',user_phone) @@ to_tsquery('russian','%s:*') OR \
         to_tsvector('russian',ruk_name1) @@ to_tsquery('russian','%s:*') OR \
         to_tsvector('russian',ruk_name2) @@ to_tsquery('russian','%s:*')) \
-        ;""" % (group,search,search,search,search,search,search,search,search,search))
+        ;""" % (search,search,search,search,search,search,search,search,search))
     elif search == '' and status != '':
-        cursor.execute("SELECT * FROM t_show_tmc WHERE grouptmc='%s' AND status_kod='%s';" % (group,status))
+        cursor.execute("SELECT * FROM t_show_tmc WHERE status_kod='%s';" % (status))
     else:
-        cursor.execute("""SELECT * FROM t_show_tmc WHERE grouptmc='%s' AND status_kod='%s' AND (\
+        cursor.execute("""SELECT * FROM t_show_tmc WHERE status_kod='%s' AND (\
         \
         to_tsvector('russian',rec_id) @@ to_tsquery('russian','%s:*') OR \
         to_tsvector('russian',date_create) @@ to_tsquery('russian','%s:*') OR \
@@ -63,7 +63,7 @@ def	GetTmcList(search,group,status=''):
         to_tsvector('russian',user_phone) @@ to_tsquery('russian','%s:*') OR \
         to_tsvector('russian',ruk_name1) @@ to_tsquery('russian','%s:*') OR \
         to_tsvector('russian',ruk_name2) @@ to_tsquery('russian','%s:*')) \
-        ;""" % (group,status,search,search,search,search,search,search,search,search,search))
+        ;""" % (status,search,search,search,search,search,search,search,search,search))
 
     data = cursor.fetchall()
 

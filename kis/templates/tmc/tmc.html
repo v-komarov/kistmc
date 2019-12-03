@@ -17,16 +17,12 @@
 
 
 <p>
-<a href="/tmcnew"><mark>Создать<mark></a>
+<a href="/tmcnew"><mark>Создать</mark></a>
 </p>
 
 <center>
     <form action="" method="post" class="forms">{% csrf_token %}
 	<fieldset>
-	    <div class="f-row">
-		<label>{{ form.group.label }}</label>
-		<div class="f-input">{{ form.group }}</div>
-	    </div><!-- f-row -->
 	    <div class="f-row">
 		<label>{{ form.status.label }}</label>
 		<div class="f-input">{{ form.status }}</div>
@@ -87,6 +83,7 @@
 	    <th>Статус</th>
 	    <th>Исполнитель<br>(телефон)</th>
 	    <th>Подписал</th>
+	    <th>Группа</th>
 	</tr>
     </thead>
     <tbody>
@@ -100,6 +97,7 @@
 	    <td><a href="/tmcdata/?tmc_id={{ row.0 }}" style="color: {{ row.22 }};">{{ row.6 }}</a></td>
 	    <td><a href="/tmcdata/?tmc_id={{ row.0 }}" style="color: {{ row.22 }};">{{ row.10 }} {{ row.9 }}<br>({{ row.12 }})</a></td>
 	    <td><a href="/tmcdata/?tmc_id={{ row.0 }}" style="color: {{ row.22 }};">{{ row.17 }}<br>{{ row.16 }}</a></td>
+		<td><a href="/tmcdata/?tmc_id={{ row.0 }}" style="color: {{ row.22 }};">{{ row.27 }}</a></td>
 	</tr>
 	{% endfor%}
     </tbody>
